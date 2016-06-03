@@ -1,0 +1,18 @@
+body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.42857;
+    color: rgb(255, 255, 255);
+    background-color: rgb(227, 4, 80);
+    font-size: 14px;
+}
+
+h1 {
+	font-size: 24px;
+}
+
+.centering {
+	text-align: center;
+    padding: 10% 40%;
+    display: inline-block;
+}
