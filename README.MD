@@ -4,8 +4,6 @@ This image is an apache2 server prepared to serve multi domain environments. Thi
 
 This image is intended to be deployed in front of other web sites, application servers or any other service provided over the web via HTTP/HTTPS that are running on the same (or different) host(s) but you want to serve under different domains or subdomains.
 
-This image provides simple mechanisms to add new sites, enable and disable sites.
-
 This image exposes ports 80 and 443 to support both HTTP and HTTPS standard ports.
 
 # Getting started
@@ -17,9 +15,23 @@ This image takes the following arguments:
 * an environment variable indicating which modules to enable
 * an environment variable indicating which sites to enable
 
-The image comes pre-bundled with some configuration templates overriden from default apache2 configuration.
+This image provides simple mechanisms to add new sites, enable and disable sites. It provides 3 sample configurations:
 
-You can run the image an copy these files into the host machine. Then modify the configuration as needed and finally you can re-run the image using volumes pointing to the modified configuration in the host machine.
+* default: the default configuration that comes with apache HTTP server which serves as fallback for any request that was not mapped to a known site. The document root folder has been modified to serve content in /var/www/default
+* foo: an HTTP site for foo.com serving contents from /var/www/foo
+* bar: an HTTPS site for bar.com serving contents from /var/www/bar
+* proxy: an HTTP site served via a reverse proxy
+
+To test the image:
+
+1. Run it withour overriding configuration.
+2. In your host machine edit `/etc/hosts` and append `foo.com` and `bar.com` site to the line that maps your loopback interface to localhost: `127.0.0.1 localhost foo.com bar.com`.
+3. Open a browser and try the following URLs:
+    
+    1. `http://localhost`, you should see a welcome page indicating you are visiting the default site.
+    2. `http://foo.com`, you should see a welcome page indicating you are visiting thhe foo site.
+    3. `http://bar.com`, you should see a welcome page indicating you are visiting the default site. This is because bar site is only served over HTTPS.
+    4. `https://bar.com`, now you should see the welcome page indicating you are visiting bar site.
 
 All sample commands assume that the coontainer is run under the `apache` name.
 
