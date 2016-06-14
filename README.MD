@@ -12,28 +12,28 @@ This image takes the following arguments:
 
 * a server root volume
 * a document root volume
-* an environment variable indicating which modules to enable
-* an environment variable indicating which sites to enable
+* a log volume
 
 This image provides simple mechanisms to add new sites, enable and disable sites. It provides 3 sample configurations:
 
 * default: the default configuration that comes with apache HTTP server which serves as fallback for any request that was not mapped to a known site. The document root folder has been modified to serve content in /var/www/default
 * foo: an HTTP site for foo.com serving contents from /var/www/foo
 * bar: an HTTPS site for bar.com serving contents from /var/www/bar
-* proxy: an HTTP site served via a reverse proxy
+* realbar: an HTTP site served via a reverse proxy from the real bar.com
 
 To test the image:
 
 1. Run it withour overriding configuration.
-2. In your host machine edit `/etc/hosts` and append `foo.com` and `bar.com` site to the line that maps your loopback interface to localhost: `127.0.0.1 localhost foo.com bar.com`.
+2. In your host machine edit `/etc/hosts` and append `foo.com`, `bar.com` and `realbar.com` site to the line that maps your loopback interface to localhost: `127.0.0.1 localhost foo.com bar.com realbar.com`.
 3. Open a browser and try the following URLs:
     
     1. `http://localhost`, you should see a welcome page indicating you are visiting the default site.
     2. `http://foo.com`, you should see a welcome page indicating you are visiting thhe foo site.
     3. `http://bar.com`, you should see a welcome page indicating you are visiting the default site. This is because bar site is only served over HTTPS.
     4. `https://bar.com`, now you should see the welcome page indicating you are visiting bar site.
+    5. `http://realbar.com`, now you should see the real `bar.com` site on the internet.
 
-All sample commands assume that the coontainer is run under the `apache` name.
+All sample commands assume that the container is run under the `apache` name.
 
 ## Running the image without overriding configuration
 
